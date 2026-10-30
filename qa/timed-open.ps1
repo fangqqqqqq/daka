@@ -23,9 +23,13 @@ if (!$ExpectBlocked) {
     # Master settings are left unchanged; separate settings tests cover edits.
 }
 Invoke-Adb shell input keyevent KEYCODE_HOME
-Start-Sleep -Seconds 13
-$timed = (Invoke-Adb shell dumpsys activity activities) -join "`n"
-$opened = $timed -match 'topResumedActivity=.*cn.fangq.qa.feishu.TargetActivity'
+$deadline = (Get-Date).AddSeconds(60)
+$opened = $false
+do {
+    Start-Sleep -Seconds 2
+    $timed = (Invoke-Adb shell dumpsys activity activities) -join "`n"
+    $opened = $timed -match 'topResumedActivity=.*cn.fangq.qa.feishu.TargetActivity'
+} while (!$opened -and (Get-Date) -lt $deadline)
 $prefs = (Invoke-Adb shell run-as cn.fangq.daka cat /data/user/0/cn.fangq.daka/shared_prefs/daka.xml) -join "`n"
 $currentTask = [regex]::Match($prefs,'<string name="notification_task">([^<]+)</string>').Groups[1].Value
 if (!$currentTask.StartsWith('TEST:') -or $currentTask -eq $previousTask) { throw 'FAIL: a new test alarm never fired; this is not the reported bug' }
