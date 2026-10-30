@@ -1,0 +1,9 @@
+pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }
+rootProject.name = 'FeishuDaka'
+include ':app'
+// Only build the fake Feishu receiver for isolated emulator regression checks.
+if (startParameter.projectProperties.containsKey('withFeishuStub')) {
+    include ':feishu-stub'
+    project(':feishu-stub').projectDir = file('qa/feishu-stub')
+}

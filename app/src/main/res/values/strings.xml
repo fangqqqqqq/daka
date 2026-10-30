@@ -1,0 +1,1 @@
+<resources><string name="accessibility_description">仅在你启用自动打卡、且到达设定时间后读取飞书考勤界面，识别并点击上班或下班按钮，核实新的成功提示。遇到人脸、拍照、登录或页面无法识别时停止。数据保存在本机。</string></resources>

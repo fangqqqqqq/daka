@@ -1,0 +1,15 @@
+.gradle/
+**/build/
+local.properties
+*.jks
+*.keystore
+*.p12
+*.pem
+.idea/
+*.iml
+.env
+.env.*
+.tools/
+dist/*.apk
+dist/*.idsig
+hs_err_pid*.log
